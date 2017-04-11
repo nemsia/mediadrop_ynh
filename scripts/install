@@ -76,7 +76,11 @@ sudo sed -i "s@allow_hosts = static.mediadrop.net@#allow_hosts = static.mediadro
 
 # Now, activate that virtual environment
 pushd $final_path
-sudo bash -c "source $final_path/venv/bin/activate && pip install uwsgi && easy_install --upgrade pip && pip install bleach && pip install paste pastedeploy 'PasteScript==1.7.5' && python setup.py develop"
+sudo bash -c "source $final_path/venv/bin/activate"
+sudo bash -c "pip install uwsgi"
+sudo bash -c "easy_install --upgrade pip"
+sudo bash -c "pip install bleach"
+sudo bash -c "python setup.py develop"
 
 # To create deployment.ini in your current dir
 sudo paster make-config MediaDrop "${final_path}/deployment.ini"
