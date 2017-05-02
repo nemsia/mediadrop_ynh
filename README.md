@@ -1,3 +1,5 @@
+# :warning: Application testing don't use this on Prod :warning:
+
 # Mediadrop for YunoHost
 
 [![Latest Version](https://img.shields.io/badge/version-_--_-green.svg?style=flat)](https://github.com/YunoHost-Apps/mediadrop_ynh/releases)
