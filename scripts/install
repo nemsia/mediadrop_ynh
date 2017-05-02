@@ -78,7 +78,7 @@ sudo sed -i "s@allow_hosts = static.mediadrop.net@#allow_hosts = static.mediadro
 pushd $final_path
 sudo bash -c "source $final_path/venv/bin/activate"
 sudo bash -c "pip install uwsgi"
-sudo bash -c "easy_install --upgrade pip"
+#sudo bash -c "easy_install --upgrade pip"
 sudo bash -c "pip install bleach"
 sudo bash -c "python setup.py develop"
 
