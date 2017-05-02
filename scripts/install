@@ -82,6 +82,7 @@ sudo bash -c "easy_install --upgrade pip"
 sudo bash -c "pip install bleach"
 sudo bash -c "python setup.py develop"
 
+
 # To create deployment.ini in your current dir
 sudo paster make-config MediaDrop "${final_path}/deployment.ini"
 # Be king rewind
