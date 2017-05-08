@@ -56,7 +56,7 @@ SETUP_SOURCE
 # Copy nginx configuration
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/$app.conf
 
-# Modify the variables in the nginx configuration file
+# Modif the variables in the nginx configuration file
 sudo sed -i "s@__PATHTOCHANGE__@$path@g" /etc/nginx/conf.d/$domain.d/$app.conf
 sudo sed -i "s@__FINALPATH__@$final_path@g" /etc/nginx/conf.d/$domain.d/$app.conf
 
@@ -78,12 +78,7 @@ sudo sed -i "s@allow_hosts = static.mediadrop.net@#allow_hosts = static.mediadro
 pushd ${final_path}
 
 # Now, activate that virtual environment
-pushd $final_path
-sudo bash -c "source $final_path/venv/bin/activate"
-sudo bash -c "pip install uwsgi"
-#sudo bash -c "easy_install --upgrade pip"
-sudo bash -c "pip install bleach"
-sudo bash -c "python setup.py develop"
+sudo bash -c "source ${final_path}/venv/bin/activate && pip install uwsgi && python setup.py develop"
 
 # To create deployment.ini in your current dir
 sudo bash -c "source ${final_path}/venv/bin/activate && paster make-config MediaDrop ${final_path}/deployment.ini"
