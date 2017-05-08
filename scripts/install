@@ -74,6 +74,9 @@ sudo su $app -c "virtualenv --distribute --no-site-packages $final_path/venv"
 # Prepare mediacore to be installed
 sudo sed -i "s@allow_hosts = static.mediadrop.net@#allow_hosts = static.mediadrop.net@g" "${final_path}/setup.cfg"
 
+# Move to final_path
+pushd ${final_path}
+
 # Now, activate that virtual environment
 pushd $final_path
 sudo bash -c "source $final_path/venv/bin/activate"
@@ -101,6 +104,9 @@ sudo sed -i "s,image_dir = %(here)s/data/images,image_dir = $final_path/data/ima
 sudo sed -i "s,media_dir = %(here)s/data/media,media_dir = $final_path/data/media/," $final_path/deployment.ini
 sudo sed -i 's,sqlalchemy.pool_recycle = 3600,sqlalchemy.pool_recycle = 200,' $final_path/deployment.ini
 
+# Move to script folder
+popd
+
 # Add uwsgi into deployment.ini (end of file)
 sudo su -c "cat ../conf/uwsgi >> ${final_path}/deployment.ini"
 
@@ -121,13 +127,10 @@ sudo mysql -u $db_user -p$db_pwd $app < "${final_path}/setup_triggers.sql"
 echo -e "127.0.0.1 $domain #MEDIADROP" | sudo tee -a /etc/hosts
 
 # Set ssowat config
-if [ "$is_public" = "No" ];
-then
-	ynh_app_setting_delete $app skipped_uris
+if [[ $is_public -eq 0 ]]; then
+	ynh_app_setting_delete $app unprotected_uris
+	sudo yunohost app ssowatconf
 fi
-
-# Reload SSOwat configuration
-sudo yunohost app ssowatconf
 
 sudo systemctl daemon-reload
 
